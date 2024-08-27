@@ -1,38 +1,40 @@
 class Queue {
-    tasks: any[] = [];
-    delay = 10;
+  private tasks: Task[] = [];
 
-    runQueue() {
-        setTimeout(() => this.doJob(), this.delay);
-    }
+  private delay: number = 10;
 
-    doJob() {
-        const task = this.tasks.shift();
-        if (task != null) {
-            console.log(task);
-        }
-        this.runQueue();
-    }
+  public runQueue(): void {
+    setTimeout(() => this.doJob(), this.delay);
+  }
 
-    addJob(task: any): number {
-        return this.tasks.push(task);
+  public doJob(): void {
+    const task = this.tasks.shift();
+    if (task !== undefined) {
+      // eslint-disable-next-line no-console
+      console.log(task.value);
     }
+    this.runQueue();
+  }
 
-    run() {
-        this.runQueue();
-    }
+  public addJob(task: Task): number {
+    return this.tasks.push(task);
+  }
 
-    set jobDelay(time: number) {
-        this.delay = time;
-    }
+  public run(): void {
+    this.runQueue();
+  }
+
+  public set jobDelay(time: number) {
+    this.delay = time;
+  }
 }
 
 class Task {
-    value: any;
+  public value: string | number;
 
-    constructor(value: any) {
-        this.value = value;
-    }
+  constructor(value: string | number) {
+    this.value = value;
+  }
 }
 
 const queue = new Queue();

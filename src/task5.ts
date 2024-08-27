@@ -1,52 +1,61 @@
-// Матрци вида
-// n - рядов, m - элементов в ряду
-// например для n = 2, m = 3
-// matrix = [
-//  [1, 'abs', 2],
-//  [0, 2, 'cdb'],
-// ]
-const getRandomString = (i: number): string => (Math.random() + i).toString(36).substring(7);
+type Matrix = Array<Array<string | number>>;
 
-const generateMatrix = (n: number, m: number): (string | number)[][] => {
-    const matrix: (string | number)[][] = [];
-    for (let i = 0; i < n; i += 1) {
-        matrix[i] = [];
-        for (let j = 0; j < m; j += 1) {
-            if (Math.random() > 0.5) {
-                matrix[i][j] = getRandomString(i);
-            } else {
-                matrix[i][j] = i + j;
-            }
-        }
-    }
-    return matrix;
+interface ISplitResult {
+  strings: string[];
+  numbers: number[];
 }
+
+const getRandomString = (i: number): string => {
+  const randomPart = Math.random().toString(36);
+  const indexPart = i.toString(36);
+  return (randomPart + indexPart).substring(7);
+};
+
+const generateMatrix = (n: number, m: number): Matrix => {
+  const result: Matrix = [];
+  for (let i = 0; i < n; i += 1) {
+    result[i] = [];
+    for (let j = 0; j < m; j += 1) {
+      if (Math.random() > 0.5) {
+        result[i][j] = getRandomString(i);
+      } else {
+        result[i][j] = i + j;
+      }
+    }
+  }
+  return result;
+};
 
 const matrix = generateMatrix(2, 3);
 
-const flat = (matrix: (string | number)[][]): (string | number)[] => {
-    return matrix.reduce((acc, row) => {
-        acc.push(...row);
-        return acc;
-    }, []);
-}
+const flat = (inputMatrix: Matrix): Array<string | number> => {
+  return inputMatrix.reduce(
+    (acc: Array<string | number>, row: Array<string | number>): Array<string | number> => {
+      acc.push(...row);
+      return acc;
+    },
+    [],
+  );
+};
 
-const list = flat(matrix);
+const flattenedList = flat(matrix);
 
-const splitByType = (list: (string | number)[]): { strings: string[], numbers: number[] } => {
-    const result: { strings: string[], numbers: number[] } = {
-        strings: [],
-        numbers: [],
+const splitByType = (inputList: Array<string | number>): ISplitResult => {
+  const result: ISplitResult = {
+    strings: [],
+    numbers: [],
+  };
+  inputList.forEach((item: string | number): void => {
+    if (typeof item === 'string') {
+      result.strings.push(item);
+    } else {
+      result.numbers.push(item);
     }
-    list.forEach((item) => {
-        const isNaN = Number.isNaN(item as number / 2);
-        if (isNaN) result.strings.push(item as string);
-        else result.numbers.push(item as number);
-    });
+  });
+  return result;
+};
 
-    return result;
-}
+const splited = splitByType(flattenedList);
 
-const splited = splitByType(list);
-
+// eslint-disable-next-line no-console
 console.log(splited);
