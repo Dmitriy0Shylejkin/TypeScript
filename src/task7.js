@@ -4,11 +4,8 @@ const user = {
     login: 'test',
     role: 'user',
 };
-const checkPermissionsDecorator = (roles) => {
-    return (user) => {
-        return roles.includes(user.role);
-    };
-};
+const checkPermissionsDecorator = (roles) => (u) => roles.includes(u.role);
 const checkPermission = checkPermissionsDecorator(['admin']);
 const hasPermissions = checkPermission(user);
+// eslint-disable-next-line no-console
 console.log(hasPermissions);

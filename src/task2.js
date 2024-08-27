@@ -22,12 +22,12 @@ class Pasta {
     }
 }
 class Kitchen {
-    makeDish(dish) {
-        if ('bake' in dish) {
+    static makeDish(dish) {
+        if (dish.bake) {
             dish.bake();
             return dish;
         }
-        else if ('cook' in dish) {
+        if (dish.cook) {
             dish.cook();
             return dish;
         }
@@ -37,5 +37,5 @@ class Kitchen {
 const kitchen = new Kitchen();
 const pizza = new Pizza(true, true, false);
 const pasta = new Pasta('spagetti', true, true);
-kitchen.makeDish(pasta);
-kitchen.makeDish(pasta);
+Kitchen.makeDish(pizza);
+Kitchen.makeDish(pasta);

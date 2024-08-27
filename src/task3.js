@@ -9,8 +9,9 @@ class Queue {
     }
     doJob() {
         const task = this.tasks.shift();
-        if (task != null) {
-            console.log(task);
+        if (task !== undefined) {
+            // eslint-disable-next-line no-console
+            console.log(task.value);
         }
         this.runQueue();
     }

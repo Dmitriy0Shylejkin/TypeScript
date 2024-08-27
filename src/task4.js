@@ -17,21 +17,22 @@ class BaseProduct {
         this.discount = discount;
     }
 }
-class Banan extends BaseProduct {
+class BananProduct extends BaseProduct {
     constructor(price, discount, size) {
         super('banan', price, discount);
         this.size = size;
     }
 }
-class IceCream extends BaseProduct {
+class IceCreamProduct extends BaseProduct {
     constructor(price, discount, withGlace) {
-        super('banan', price, discount);
+        super('ice cream', price, discount);
         this.withGlace = withGlace;
     }
 }
 const shop = new Shop();
-const iceCream = new IceCream(10, 0, true);
-const banan = new Banan(5, 0.1, 'small');
+const iceCream = new IceCreamProduct(10, 0, true);
+const banan = new BananProduct(5, 0.1, 'small');
 shop.addGood = iceCream;
 shop.addGood = banan;
+// eslint-disable-next-line no-console
 console.log(shop.goods);
